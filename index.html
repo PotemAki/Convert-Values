@@ -5,7 +5,156 @@
   <title>MyApp</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/styles.css" >
+  <style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 700px;
+  background-color: #FAEBD7;
+}
+
+.box {
+  border: none;
+  background-color: rgb(223, 253, 253);
+  border-radius: 3%;
+  box-shadow: 1px 3px 5px 3px rgba(31, 31, 31, 0.2);
+  width: 800px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.box:hover {
+  background-color: rgb(210, 253, 253);
+}
+
+h1 {
+  font-size: 45px;
+}
+
+.generated {
+  font-size: 25px;
+  margin-bottom: 20px;
+  background-color: rgb(70, 70, 70);
+  padding: 10px 15px 10px 20px;
+  border-radius: 5px;
+  width: 600px;
+  height: 330px;
+}
+
+.one-line {
+  display: grid;
+  grid-template-columns: 130px 30px 250px 200px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.generate-button {
+  margin: 5px;
+  padding: 10px;
+  width: 150px;
+  height: 60px;
+  border: none;
+  border-radius: 3%;
+  box-shadow: 1px 3px 5px 3px rgba(31, 31, 31, 0.2);
+  font-size: 20px;
+  font-weight: bold;
+  background-color: rgb(223, 253, 253);
+  cursor: pointer;
+}
+
+.generate-button:active {
+  opacity: 0.6;
+}
+
+.output {
+  color: white;
+  font-weight: bold;
+}
+
+.input {
+  height: 25px;
+  width: 100px;
+  font-size: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 10px;
+  background-color: #faebd7;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.to-title {
+  width: 200px;
+  padding-right: 5px;
+  display: flex;
+  justify-content: end;
+}
+
+.alert {
+  height: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #473011;
+  transition: 0.5s;
+}
+
+/* Responsive Changes */
+
+@media screen and (max-width: 670px) {
+  body {
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+
+  .box {
+    width: 100%;
+    height: auto;
+    padding: 5px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .generated {
+    width: 100%;
+    height: auto;
+    font-size: 20px;
+  }
+
+  .one-line {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    justify-items: center;
+    margin: 5px;
+  }
+
+  .generate-button {
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+  }
+
+  .input {
+    width: 80px;
+    font-size: 16px;
+  }
+
+  .to-title {
+    width: 100%;
+    padding-right: 0;
+    justify-content: center;
+  }
+}
+
+  </style>
 </head>
 <body>   
     <div class="box">
@@ -62,6 +211,68 @@
         <p class="alert" id="alert"></p>
     </div>
 
-    <script src="/scripts.js"></script>
+    <script>
+        const button = document.getElementById('js-button')
+
+const inputC = document.getElementById('inputC')
+const outputC = document.getElementById('outputC')
+const inputF = document.getElementById('inputF')
+const outputF = document.getElementById('outputF')
+
+const inputKg = document.getElementById('inputkg')
+const outputLb = document.getElementById('outputlb')
+const inputLb = document.getElementById('inputlb')
+const outputKg = document.getElementById('outputkg')
+
+const inputKm = document.getElementById('inputkm')
+const outputMi = document.getElementById('outputmi')
+const inputMi = document.getElementById('inputmi')
+const outputKm = document.getElementById('outputkm')
+
+const alertMsg = document.getElementById(`alert`)
+
+button.addEventListener('click', () => {
+    outputC.innerText = getCelsius() + ` °F`;
+    outputF.innerText = getFahrenheit() + ` °C`;
+    outputLb.innerText = getPounds() + ` lbs`;
+    outputKg.innerText = getKilograms() + ` kg`;
+    outputMi.innerText = getMiles() + ` mi`;
+    outputKm.innerText = getKilometers() + ` km`;
+
+    alertMsg.innerText = 'done!'
+
+    setTimeout(function(){
+        alertMsg.innerText = ''
+    }, 450);
+})
+//temp
+function getCelsius() {
+    return Math.round((inputC.value * 9/5 + 32) * 100) /100
+}
+function getFahrenheit() {
+    return Math.round(((inputF.value - 32) * 5/9) * 100) /100
+}
+//weight
+function getPounds() {
+    return Math.round((inputKg.value * 2.2046) * 100) /100
+}
+function getKilograms() {
+    return Math.round((inputLb.value / 2.2046) * 100) /100
+}
+//lenght
+function getMiles() {
+    return Math.round((inputKm.value * 0.62137) * 100) /100
+}
+function getKilometers() {
+    return Math.round((inputMi.value * 1.60934) * 100) /100
+}
+
+//stoping from entering unlimited numbers
+function limitKeypress(event, value, maxLength) {
+    if (value != undefined && value.length >= maxLength) {
+    event.preventDefault();
+    }
+}
+    </script>
 </body>
 </html>
